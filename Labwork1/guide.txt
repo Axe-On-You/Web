@@ -1,0 +1,7 @@
+24036
+
+ssh -p 2222 -L 8080:localhost:24036 s466730@helios.cs.ifmo.ru
+Ojvc*2285
+cd httpd-root/fcgi-bin/
+httpd -f ~/httpd-root/conf/httpd.conf -k start
+java -DFCGI=24037 -jar labwork1.jar

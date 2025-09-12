@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+group = 'ru.pmih.web'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation files('./libs/fastcgi-lib.jar')
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'io.javalin:javalin:6.1.3'
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1'
+    implementation 'org.slf4j:slf4j-simple:2.0.13'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.pmih.web.Main'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveFileName = 'labwork1.jar'
+}
+
+test {
+    useJUnitPlatform()
+}
