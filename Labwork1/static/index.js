@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const yNum = Number(yValue);
 
-        if (isNaN(yNum) || yNum < -5 || yNum > 5) {
+        if (isNaN(yNum) || yNum <= -5 || yNum >= 5) {
             yInput.classList.add('invalid');
-            errorMessage.textContent = 'Y должен быть числом в диапазоне [-5; 5].';
+            errorMessage.textContent = 'Y должен быть числом в интервале (-5; 5).';
         } else {
             yInput.classList.remove('invalid');
             errorMessage.textContent = '';
@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const yNum = Number(yValueRaw);
-        if (isNaN(yNum) || yNum < -5 || yNum > 5) {
-            errorMessage.textContent = 'Y должен быть числом в диапазоне [-5; 5].';
+        if (isNaN(yNum) || yNum <= -5 || yNum >= 5) {
+            errorMessage.textContent = 'Y должен быть числом в интервале (-5; 5).';
             yInput.classList.add('invalid');
             return;
         } else {

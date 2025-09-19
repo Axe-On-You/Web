@@ -48,15 +48,15 @@ class Params {
             throw new ValidationException("'x' должен быть целым числом.");
         }
 
-        // Y: double в диапазоне [-5;5]
+        // Y: double в отрезке (-5;5)
         String yStr = params.get("y");
         if (yStr == null || yStr.isEmpty()) {
             throw new ValidationException("Параметр 'y' отсутствует.");
         }
         try {
             double yVal = Double.parseDouble(yStr.replace(',', '.').trim());
-            if (yVal < -5 || yVal > 5) {
-                throw new ValidationException("Недопустимое значение для 'y': " + yVal + ". 'y' должен быть в диапазоне [-5; 5]");
+            if (yVal <= -5 || yVal >= 5) {
+                throw new ValidationException("Недопустимое значение для 'y': " + yVal + ". 'y' должен быть в интервале (-5; 5)");
             }
         } catch (NumberFormatException e) {
             throw new ValidationException("'y' должен быть числом.");

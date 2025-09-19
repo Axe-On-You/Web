@@ -110,7 +110,12 @@
                         <!-- Ввод Y -->
                         <div class="form-group">
                             <label for="y-input">Значение Y:</label>
-                            <input type="text" id="y-input" name="y" placeholder="Число от -5 до 5" required>
+                            <input type="text"
+                                   id="y-input"
+                                   name="y"
+                                   placeholder="Число от -5 до 5"
+                                   required
+                                   maxlength="17">
                         </div>
 
                         <!-- Выбор R -->
@@ -129,6 +134,7 @@
                     <div class="form-actions">
                         <button type="submit">Проверить</button>
                         <button type="reset">Очистить</button>
+                        <button type="button" id="clear-history-btn">Очистить историю</button>
                     </div>
                     <div id="error-message" class="error-message"></div>
                 </form>
