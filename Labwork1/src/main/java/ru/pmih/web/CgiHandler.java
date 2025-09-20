@@ -7,7 +7,6 @@ import java.util.Properties;
 
 /**
  * Ядро FastCGI-приложения. Управляет жизненным циклом приёма запросов, делегирует:
- *  - историю HistoryManager
  *  - вычисления AreaCalculator
  *  - низкоуровневые операции CgiUtils
  */
