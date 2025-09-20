@@ -59,7 +59,6 @@ main {
 /* График */
 .graph-container {
     margin-bottom: 1.5em;
-    /* --- ИЗМЕНЕНИЯ ЗДЕСЬ --- */
     max-width: 350px; /* Ограничиваем максимальную ширину */
     margin-left: auto;  /* Центрируем блок */
     margin-right: auto; /* Центрируем блок */
@@ -137,6 +136,15 @@ button[type="reset"] {
 
 button[type="reset"]:hover {
     background-color: #ec971f;
+}
+
+#clear-history-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+#clear-history-btn:hover {
+    background-color: #c9302c;
 }
 
 .error-message {

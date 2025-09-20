@@ -138,6 +138,15 @@ button[type="reset"]:hover {
     background-color: #ec971f;
 }
 
+#clear-history-btn {
+    background-color: #d9534f;
+    color: white;
+}
+
+#clear-history-btn:hover {
+    background-color: #c9302c;
+}
+
 .error-message {
     color: #d9534f;
     text-align: center;

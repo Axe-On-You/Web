@@ -48,7 +48,7 @@ class Params {
             throw new ValidationException("'x' должен быть целым числом.");
         }
 
-        // Y: double в отрезке (-5;5)
+        // Y: double в интервале (-5;5)
         String yStr = params.get("y");
         if (yStr == null || yStr.isEmpty()) {
             throw new ValidationException("Параметр 'y' отсутствует.");

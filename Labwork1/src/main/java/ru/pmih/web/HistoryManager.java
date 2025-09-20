@@ -1,19 +1,21 @@
 package ru.pmih.web;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.LinkedList;
 import java.util.ArrayList;
 
 /**
  * Отвечает за хранение и управление историей запросов.
- * Потокобезопасность обеспечивается CopyOnWriteArrayList.
+ * Использует LinkedList для эффективного добавления в конец и удаления из начала.
  */
 public class HistoryManager {
-
-    private final CopyOnWriteArrayList<HistoryEntry> history = new CopyOnWriteArrayList<>();
+    private final LinkedList<HistoryEntry> history = new LinkedList<>();
     private final int limit;
 
     public HistoryManager(int limit) {
+        if (limit <= 0) {
+            throw new IllegalArgumentException("Лимит должен быть положительным числом.");
+        }
         this.limit = limit;
     }
 
@@ -30,17 +32,13 @@ public class HistoryManager {
         history.clear();
     }
 
+    /**
+     * Упрощенный и более эффективный метод обрезки.
+     * Если размер превышает лимит, просто удаляем первый (самый старый) элемент.
+     */
     private void trimIfNeeded() {
-        int overflow = history.size() - limit;
-        if (overflow > 0) {
-            // Удаляем самые старые
-            for (int i = 0; i < overflow; i++) {
-                if (!history.isEmpty()) {
-                    history.remove(0);
-                } else {
-                    break;
-                }
-            }
+        if (history.size() > limit) {
+            history.removeFirst();
         }
     }
 }
