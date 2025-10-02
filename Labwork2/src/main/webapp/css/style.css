@@ -1,0 +1,185 @@
+/* Общие стили для body */
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 1em;
+    overflow-y: scroll;
+}
+
+/* Стиль для основной таблицы-контейнера */
+.main-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Ячейки с контентом и результатами */
+.content-cell {
+    width: 50%;
+    vertical-align: top;
+    padding-right: 1em;
+}
+
+.results-cell {
+    width: 50%;
+    vertical-align: top;
+    padding-left: 1em;
+}
+
+/* --- Стили для шапки (header) --- */
+.header-row header {
+    background-color: #4a4a4a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 1em;
+}
+
+.header-row header h1,
+.header-row header h2 {
+    margin: 0;
+    padding: 4px 0;
+    font-family: serif;
+    color: #e0e0e0;
+    font-size: 1.2em;
+}
+
+/* --- Стили для основного контента --- */
+main {
+    background: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* График */
+.graph-container {
+    margin-bottom: 1.5em;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.graph-container canvas {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Форма */
+#point-form fieldset {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 1em;
+}
+
+#point-form legend {
+    font-weight: bold;
+    color: #555;
+    padding: 0 0.5em;
+}
+
+.form-group {
+    margin-bottom: 1em;
+}
+
+#point-form input[type="text"] {
+    width: 95%;
+    padding: 8px 2.5%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-group span {
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 1.5em;
+}
+
+.form-actions button, .form-actions .back-link button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+    background-color: #5bc0de;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+}
+.form-actions .back-link {
+    text-decoration: none;
+}
+.form-actions button:hover, .form-actions .back-link button:hover {
+    background-color: #31b0d5;
+}
+
+
+button[type="submit"] {
+    background-color: #5cb85c;
+    color: white;
+}
+button[type="submit"]:hover { background-color: #4cae4c; }
+
+button[type="reset"] {
+    background-color: #f0ad4e;
+    color: white;
+}
+button[type="reset"]:hover { background-color: #ec971f; }
+
+.error-message {
+    color: #d9534f;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 1em;
+    min-height: 1.2em;
+}
+
+/* Стили для таблицы результатов */
+.results-section {
+    background: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+#results-table th, #results-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#results-table thead {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+}
+
+.hit-row {
+    background-color: #dff0d8;
+}
+.miss-row {
+    background-color: #f2dede;
+}
