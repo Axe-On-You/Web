@@ -164,7 +164,8 @@
                 <div class="pagination-search">
                     <form action="controller" method="get">
                         <label for="page-search">Перейти к странице:</label>
-                        <input type="number" id="page-search" name="page" min="1" max="<%= totalPages %>" required style="width: 60px;">
+                        <input type="number" id="page-search" name="page" min="1" max="<%= totalPages %>" required style="width: 60px;"
+                               maxlength="<%= String.valueOf(totalPages).length() %>" oninput="this.value=this.value.slice(0,this.maxLength)">
                         <input type="hidden" name="pageSize" value="<%= pageSize %>">
                         <button type="submit">Перейти</button>
                     </form>
