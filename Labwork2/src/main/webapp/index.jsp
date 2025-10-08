@@ -160,6 +160,16 @@
                         }
                     %>
                 </div>
+                <% if (totalPages > 1) { %>
+                <div class="pagination-search">
+                    <form action="controller" method="get">
+                        <label for="page-search">Перейти к странице:</label>
+                        <input type="number" id="page-search" name="page" min="1" max="<%= totalPages %>" required style="width: 60px;">
+                        <input type="hidden" name="pageSize" value="<%= pageSize %>">
+                        <button type="submit">Перейти</button>
+                    </form>
+                </div>
+                <% } %>
             </section>
         </td>
     </tr>
