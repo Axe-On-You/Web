@@ -183,3 +183,73 @@ button[type="reset"]:hover { background-color: #ec971f; }
 .miss-row {
     background-color: #f2dede;
 }
+
+/* --- Стили для пагинации (paging) --- */
+
+/* Стиль для заголовка История проверок*/
+.results-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Стили для контейнера пагинации */
+.pagination-nav {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Общий стиль для всех "кнопок" пагинации (ссылок и текущей страницы) */
+.pagination-nav a,
+.pagination-nav .current-page {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;
+    font-size: 14px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* Стиль для ссылок пагинации при наведении */
+.pagination-nav a:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+/* Стиль для "кнопки" текущей страницы */
+.pagination-nav .current-page {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+/* Стили для формы пагинации */
+.pagination-controls form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Стилизуем кнопку "Применить" под кнопки пагинации */
+.pagination-controls button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination-controls button:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}

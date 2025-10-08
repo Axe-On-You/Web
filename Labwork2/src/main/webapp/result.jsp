@@ -84,7 +84,7 @@
                         }
                     %>
                     <div class="form-actions">
-                        <a href="index.jsp" class="back-link">
+                        <a href="controller" class="back-link">
                             <button type="button">Вернуться на главную</button>
                         </a>
                     </div>
