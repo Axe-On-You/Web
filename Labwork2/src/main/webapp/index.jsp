@@ -120,10 +120,24 @@
                         if (totalPages > 1) {
                             if (currentPage > 1) {
                     %>
-                    <a href="controller?page=<%= currentPage - 1 %>&pageSize=<%= pageSize %>">Назад</a>
+                    <a href="controller?page=1&pageSize=<%= pageSize %>" title="На первую страницу">&laquo;</a>
+                    <a href="controller?page=<%= currentPage - 1 %>&pageSize=<%= pageSize %>" title="На предыдущую страницу">&lsaquo;</a>
                     <%
                         }
-                        for (int i = 1; i <= totalPages; i++) {
+                        int startPage = Math.max(1, currentPage - 1);
+                        int endPage = Math.min(totalPages, currentPage + 1);
+                        if (currentPage == 1) {
+                            endPage = Math.min(totalPages, 3);
+                        }
+                        if (currentPage == totalPages) {
+                            startPage = Math.max(1, totalPages - 2);
+                        }
+                        if (startPage > 1) {
+                    %>
+                    <span class="pagination-ellipsis">...</span>
+                    <%
+                        }
+                        for (int i = startPage; i <= endPage; i++) {
                             if (i == currentPage) {
                     %>
                     <span class="current-page"><%= i %></span>
@@ -134,15 +148,20 @@
                     <%
                             }
                         }
+                        if (endPage < totalPages) {
+                    %>
+                    <span class="pagination-ellipsis">...</span>
+                    <%
+                        }
                         if (currentPage < totalPages) {
                     %>
-                    <a href="controller?page=<%= currentPage + 1 %>&pageSize=<%= pageSize %>">Вперед</a>
+                    <a href="controller?page=<%= currentPage + 1 %>&pageSize=<%= pageSize %>" title="На следующую страницу">&rsaquo;</a>
+                    <a href="controller?page=<%= totalPages %>&pageSize=<%= pageSize %>" title="На последнюю страницу">&raquo;</a>
                     <%
                             }
                         }
                     %>
                 </div>
-
             </section>
         </td>
     </tr>

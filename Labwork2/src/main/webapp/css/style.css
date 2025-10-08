@@ -229,6 +229,12 @@ button[type="reset"]:hover { background-color: #ec971f; }
     font-weight: bold;
 }
 
+/* Стиль для многоточия в пагинации */
+.pagination-ellipsis {
+    padding: 8px 4px;
+    color: #888;
+}
+
 /* Стили для формы пагинации */
 .pagination-controls form {
     display: flex;
