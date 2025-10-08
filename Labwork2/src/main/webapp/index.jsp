@@ -121,16 +121,15 @@
                             if (currentPage > 1) {
                     %>
                     <a href="controller?page=1&pageSize=<%= pageSize %>" title="На первую страницу">&laquo;</a>
-                    <a href="controller?page=<%= currentPage - 1 %>&pageSize=<%= pageSize %>" title="На предыдущую страницу">&lsaquo;</a>
                     <%
                         }
-                        int startPage = Math.max(1, currentPage - 1);
-                        int endPage = Math.min(totalPages, currentPage + 1);
-                        if (currentPage == 1) {
-                            endPage = Math.min(totalPages, 3);
+                        int startPage = Math.max(1, currentPage - 2);
+                        int endPage = Math.min(totalPages, currentPage + 2);
+                        if (currentPage <= 3) {
+                            endPage = Math.min(totalPages, 5);
                         }
-                        if (currentPage == totalPages) {
-                            startPage = Math.max(1, totalPages - 2);
+                        if (currentPage >= totalPages - 2) {
+                            startPage = Math.max(1, totalPages - 4);
                         }
                         if (startPage > 1) {
                     %>
@@ -155,7 +154,6 @@
                         }
                         if (currentPage < totalPages) {
                     %>
-                    <a href="controller?page=<%= currentPage + 1 %>&pageSize=<%= pageSize %>" title="На следующую страницу">&rsaquo;</a>
                     <a href="controller?page=<%= totalPages %>&pageSize=<%= pageSize %>" title="На последнюю страницу">&raquo;</a>
                     <%
                             }
