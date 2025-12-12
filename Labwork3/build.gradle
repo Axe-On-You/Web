@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+java {
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
+}
+
+group = 'ru.pmih.web'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    // lombok
+    compileOnly "org.projectlombok:lombok:1.18.36"
+    annotationProcessor "org.projectlombok:lombok:1.18.36"
+
+    // JSF
+    implementation 'jakarta.faces:jakarta.faces-api:3.0.0'
+    implementation 'org.glassfish:jakarta.faces:3.0.0'
+
+    // JPA API
+    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+
+    // PrimeFaces
+    implementation 'org.primefaces:primefaces:12.0.0:jakarta'
+
+    // EL
+    implementation 'jakarta.el:jakarta.el-api:5.0.0'
+
+    // Hibernate
+    implementation 'org.hibernate:hibernate-gradle-plugin:5.6.15.Final'
+
+    // Jakarta CDI & Transactions
+    implementation 'jakarta.enterprise:jakarta.enterprise.cdi-api:3.0.0'
+    implementation 'jakarta.transaction:jakarta.transaction-api:2.0.0'
+
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+war {
+    webAppDirName = 'src/main/webapp'
+}

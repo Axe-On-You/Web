@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Web Lab 3 - Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <h:outputStylesheet library="style" name="style.css" />
+</h:head>
+
+<h:body>
+    <header>
+        <div class="container">
+            <span class="head-link">P3211</span>
+            <span class="head-link">Михайлов Петр Сергеевич</span>
+            <span class="head-link">Вариант:  28345</span>
+        </div>
+    </header>
+
+    <main>
+        <h1>Web Lab 3</h1>
+        <div class="grid-container">
+            <div class="map-container">
+                <h2>Текущее время</h2>
+                <p class="clock-info">Обновляется каждые 7 секунд</p>
+                <div class="canvas-container">
+                    <canvas id="clock-canvas" />
+                </div>
+            </div>
+            <div class="form-container">
+                <h2>Возможности приложения</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="feature-icon">🕐</span>
+                        <p>Просмотр текущего времени (обновляется каждые 7 секунд)</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📍</span>
+                        <p>Проверка попадания точки в заданную область</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📊</span>
+                        <p>Просмотр истории всех проверок</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin:  5px 20%; display: flex;">
+            <h:link value="К точкам" outcome="results" styleClass="button-big-link" />
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Web Lab 3 - Михайлов Петр Сергеевич, P3211</p>
+        </div>
+    </footer>
+
+    <h:outputScript library="script" name="clock.js" />
+</h:body>
+
+</html>
