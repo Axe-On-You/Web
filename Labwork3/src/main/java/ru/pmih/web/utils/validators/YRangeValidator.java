@@ -8,10 +8,18 @@ import jakarta.faces.validator.Validator;
 import jakarta.faces.validator.ValidatorException;
 
 @FacesValidator("yRangeValidator")
-public class YRangeValidator implements Validator<Float> {
+public class YRangeValidator implements Validator<Number> {
     @Override
-    public void validate(FacesContext facesContext, UIComponent uiComponent, Float aFloat) throws ValidatorException {
-        if (-5 < aFloat && aFloat < 3) return;
-        throw new ValidatorException(new FacesMessage("Ошибка валидации", "Y должен быть от -5 до 3 НЕ включительно"));
+    public void validate(FacesContext facesContext, UIComponent uiComponent, Number value) throws ValidatorException {
+        if (value == null) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Ошибка валидации", "Y не может быть пустым"));
+        }
+
+        double y = value.doubleValue();
+        if (y <= -3 || y >= 3) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Ошибка валидации", "Y должен быть от -3 до 3 НЕ включительно"));
+        }
     }
 }

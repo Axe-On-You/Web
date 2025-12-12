@@ -67,7 +67,7 @@ function drawCoordinateSystem() {
     ctx.fillText('0', centerX + 5, centerY - 5);
 }
 
-// рисование точки по абсолютный координатам
+// рисование точки по абсолютным координатам
 function drawDot(x, y, success) {
     const color = success ? "green" : "red";
     const strokeColor = "black";
@@ -117,33 +117,38 @@ function drawFigureOnCanvas(selectedRJson) {
     const height = canvas.height;
     const centerX = width / 2;
     const centerY = height / 2;
-    const areaColor = "rgba(0, 48, 73, 0.4)"
+    const areaColor = "rgba(0, 48, 73, 0.4)";
 
     drawCoordinateSystem();
 
     selectedRJson.forEach(val => {
-        let rValue = parseFloat(val);
+        let r = parseFloat(val);
 
         ctx.fillStyle = areaColor;
 
-        ctx.fillRect(centerX, centerY, rValue * one / 2, rValue * one)
-
+        // 1. Четверть круга в левой нижней части (x <= 0, y <= 0), радиус R
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
-        ctx.lineTo(centerX - rValue * one, centerY);
-        ctx.lineTo(centerX, centerY - rValue * one / 2);
-        ctx.closePath();
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, rValue * one / 2, getRadians(270), getRadians(0));
+        ctx.arc(centerX, centerY, r * one, getRadians(90), getRadians(180));
         ctx.lineTo(centerX, centerY);
         ctx.closePath();
         ctx.fill();
+
+        // 2. Треугольник в правой верхней части (x >= 0, y >= 0)
+        // Вершины: (0,0), (R,0), (0,R)
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);                    // (0, 0)
+        ctx.lineTo(centerX + r * one, centerY);          // (R, 0)
+        ctx.lineTo(centerX, centerY - r * one);          // (0, R)
+        ctx.closePath();
+        ctx.fill();
+
+        // 3. Прямоугольник в левой верхней части (x <= 0, y >= 0)
+        // От (-R/2, 0) до (0, R)
+        ctx.fillRect(centerX - r * one / 2, centerY - r * one, r * one / 2, r * one);
     });
 
     drawAllDots(selectedRJson);
-
 }
 
 
@@ -204,12 +209,13 @@ canvas.addEventListener("click", event => {
 
     const systemCoords = absToSystemCoord(clickX, clickY);
 
-    if (-5 >= systemCoords.y || 3 <= systemCoords.y) {
-        showClientSideMessage("Неа", "Y должен быть от -5 до 3 не включительно", "warn");
+    // Новые границы: Y от -3 до 3, X от -4 до 2
+    if (-3 >= systemCoords.y || 3 <= systemCoords.y) {
+        showClientSideMessage("Неа", "Y должен быть от -3 до 3 не включительно", "warn");
         return;
     }
-    if (-4 > systemCoords.x || 4 < systemCoords.x) {
-        showClientSideMessage("Неа", "X должен быть от -4 до 4 включительно", "warn");
+    if (-4 > systemCoords.x || 2 < systemCoords.x) {
+        showClientSideMessage("Неа", "X должен быть от -4 до 2 включительно", "warn");
         return;
     }
 

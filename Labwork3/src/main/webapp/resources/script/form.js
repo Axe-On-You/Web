@@ -2,26 +2,25 @@ const controlForm = document.querySelector('#control-form');
 var errorCount = 0;
 
 function validateForm() {
+    const selectedXBoxes = document.querySelectorAll('#x-values .ui-chkbox-box.ui-state-active');
     const selectedRBoxes = document.querySelectorAll('#r-values .ui-chkbox-box.ui-state-active');
-    const xValue = document.querySelector('#x-value_input').value;
-    const yValue = document.querySelector('#y-value_input').value;
+    const yValue = document.querySelector('#y-value').value;
 
     let summary = "Ошибка валидации";
+
+    if (! selectedXBoxes.length) {
+        showError(summary, "Выбери хоть один X");
+        return false;
+    }
 
     if (!selectedRBoxes.length) {
         showError(summary, "Выбери хоть один радиус");
         return false;
     }
 
-    let xNumber = parseFloat(xValue);
-    if (isNaN(xNumber) || !(-4 <= xNumber && xNumber <= 4)) {
-        showError(summary, "Проверь X!");
-        return false;
-    }
-
     let yNumber = parseFloat(yValue);
-    if (isNaN(yNumber) || !(-5 < yNumber && yNumber < 3)) {
-        showError(summary, "Проверь Y!");
+    if (isNaN(yNumber) || ! (-3 < yNumber && yNumber < 3)) {
+        showError(summary, "Y должен быть от -3 до 3 не включительно!");
         return false;
     }
 
@@ -49,7 +48,6 @@ function showError(summary, text) {
     })
 
     timedRemoveElement("#error-div-" + errorCount)
-
 }
 
 async function timedRemoveElement(nodeSelector) {

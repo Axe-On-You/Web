@@ -18,7 +18,7 @@
         <div class="container">
             <span class="head-link">P3211</span>
             <span class="head-link">Михайлов Петр Сергеевич</span>
-            <span class="head-link">Вариант:  28345</span>
+            <span class="head-link">Вариант: 28345</span>
         </div>
     </header>
 
@@ -40,22 +40,8 @@
                 <div class="control-unit-container" id="control-unit-div">
                     <h:form id="control-form" prependId="false">
                         <div class="form-grid">
-                            <p:outputLabel for="r-values" value="Выберите R:" />
-                            <p:selectManyCheckbox id="r-values" value="#{inputBean.selectedRValues}">
-                                <f:selectItem itemLabel="1" itemValue="1"/>
-                                <f:selectItem itemLabel="2" itemValue="2"/>
-                                <f:selectItem itemLabel="3" itemValue="3"/>
-                                <f:selectItem itemLabel="4" itemValue="4"/>
-                                <f:selectItem itemLabel="5" itemValue="5"/>
-                                <p:ajax listener="#{inputBean.onRChange}" oncomplete="handleRChange(args. selectedRJson)" />
-                            </p:selectManyCheckbox>
-                            <p:outputLabel for="x-value" value="Выберите X:" />
-                            <p:selectOneMenu
-                                    id="x-value"
-                                    value="#{inputBean. x}"
-                                    required="true"
-                                    requiredMessage="Выбери хотя бы 1 значение R">
-                                <f:selectItem itemLabel="Выберите X" itemValue=""/>
+                            <p:outputLabel for="x-values" value="Выберите X:" />
+                            <p:selectManyCheckbox id="x-values" value="#{inputBean.selectedXValues}" layout="responsive" columns="4">
                                 <f:selectItem itemLabel="-4" itemValue="-4"/>
                                 <f:selectItem itemLabel="-3" itemValue="-3"/>
                                 <f:selectItem itemLabel="-2" itemValue="-2"/>
@@ -63,23 +49,30 @@
                                 <f:selectItem itemLabel="0" itemValue="0"/>
                                 <f:selectItem itemLabel="1" itemValue="1"/>
                                 <f:selectItem itemLabel="2" itemValue="2"/>
-                                <f:selectItem itemLabel="3" itemValue="3"/>
-                                <f:selectItem itemLabel="4" itemValue="4"/>
-                            </p:selectOneMenu>
+                            </p:selectManyCheckbox>
+
                             <p:outputLabel for="y-value" value="Введите Y:" />
-                            <p:inputNumber
-                                    id="y-value"
-                                    value="#{inputBean.y}"
-                                    required="true"
-                                    placeholder="Число от -5 до 3 не включительно..."
-                                    requiredMessage="Y не может быть пустым"
-                                    decimalPlaces="5"
-                                    decimalSeparator="."
-                                    inputStyle="width: 100%">
+                            <p:inputText
+                                id="y-value"
+                                value="#{inputBean.y}"
+                                required="true"
+                                placeholder="Число от -3 до 3 не включительно..."
+                                requiredMessage="Y не может быть пустым">
                                 <f:validator validatorId="yRangeValidator" />
-                            </p:inputNumber>
+                                <f:convertNumber />
+                            </p:inputText>
+
+                            <p:outputLabel for="r-values" value="Выберите R:" />
+                            <p:selectManyCheckbox id="r-values" value="#{inputBean.selectedRValues}" layout="responsive" columns="5">
+                                <f:selectItem itemLabel="1" itemValue="1"/>
+                                <f:selectItem itemLabel="1.5" itemValue="1.5"/>
+                                <f:selectItem itemLabel="2" itemValue="2"/>
+                                <f:selectItem itemLabel="2.5" itemValue="2.5"/>
+                                <f:selectItem itemLabel="3" itemValue="3"/>
+                                <p:ajax listener="#{inputBean.onRChange}" oncomplete="handleRChange(args.selectedRJson)" />
+                            </p:selectManyCheckbox>
                         </div>
-                        <div class="row-container" style="margin:  1rem 0">
+                        <div class="row-container" style="margin: 1rem 0">
                             <p:commandButton
                                     value="Очистить"
                                     actionListener="#{inputBean.clear}"
@@ -89,7 +82,7 @@
                                     oncomplete="refreshCanvas();" />
                             <p:commandButton
                                     value="Проверить"
-                                    actionListener="#{inputBean.check}"
+                                    action="#{inputBean.check}"
                                     process="@form"
                                     update="control-form response-table growl all-points-json max-r-value"
                                     styleClass="ui-button-success form-button"
@@ -101,9 +94,7 @@
                     <p:growl id="growl" showDetail="true" />
 
                     <div class="section-title">
-                        <span class="title-icon">📊</span>
                         <h1>Results</h1>
-                        <span class="title-icon">📊</span>
                     </div>
 
                     <p:dataTable
@@ -115,7 +106,7 @@
                             scrollable="true"
                             scrollHeight="300px">
                         <p:column headerText="x">
-                            <h:outputText value="#{point. x}" />
+                            <h:outputText value="#{point.x}" />
                         </p:column>
                         <p:column headerText="y">
                             <h:outputText value="#{point.y}" />
@@ -124,7 +115,7 @@
                             <h:outputText value="#{point.r}" />
                         </p:column>
                         <p:column headerText="hit">
-                            <h:outputText value='#{point.hit ? "ПОПАЛ" : "ПРОМАЗАЛ"}' styleClass='#{point.hit ? "good" :  "bad"}' />
+                            <h:outputText value='#{point.hit ?  "ПОПАЛ" : "ПРОМАЗАЛ"}' styleClass='#{point.hit ? "good" : "bad"}' />
                         </p:column>
                     </p:dataTable>
 

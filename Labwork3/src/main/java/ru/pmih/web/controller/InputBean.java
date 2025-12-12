@@ -34,7 +34,7 @@ public class InputBean implements Serializable {
     @Inject
     PointValidator pointValidator;
 
-    private Float x;
+    private List<String> selectedXValues;  // X теперь множественный выбор
     private Float y;
     private List<String> selectedRValues;
 
@@ -42,6 +42,7 @@ public class InputBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        selectedXValues = new ArrayList<>();
         selectedRValues = new ArrayList<>();
     }
 
@@ -49,7 +50,7 @@ public class InputBean implements Serializable {
      * Очистка полей ввода
      */
     public void clear() {
-        x = null;
+        selectedXValues.clear();
         y = null;
         selectedRValues.clear();
     }
@@ -70,10 +71,20 @@ public class InputBean implements Serializable {
      * Отправка формы, проверка факта попадания точек и обновление кэша
      */
     public void check() {
-        if (selectedRValues.isEmpty()) throw new ValidatorException(new FacesMessage("Ошибка валидации", "Валидация провалилась! "));
+        if (selectedRValues.isEmpty()) {
+            throw new ValidatorException(new FacesMessage("Ошибка валидации", "Выберите хотя бы один R! "));
+        }
+        if (selectedXValues.isEmpty()) {
+            throw new ValidatorException(new FacesMessage("Ошибка валидации", "Выберите хотя бы один X!"));
+        }
 
         List<PointDTO> pointDTOs = new CopyOnWriteArrayList<>();
-        selectedRValues.forEach((r) -> pointDTOs.add(new PointDTO(x, y, Float.parseFloat(r))));
+        // Создаём точки для всех комбинаций X и R
+        for (String x : selectedXValues) {
+            for (String r : selectedRValues) {
+                    pointDTOs.add(new PointDTO(Float.parseFloat(x), y, Float.parseFloat(r)));
+            }
+        }
         addPoints(pointDTOs);
     }
 
@@ -105,7 +116,8 @@ public class InputBean implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String x = facesContext.getExternalContext().getRequestParameterMap().get("x");
         String y = facesContext.getExternalContext().getRequestParameterMap().get("y");
-        List<String> rList = (List<String>) new Gson().fromJson(facesContext.getExternalContext().getRequestParameterMap().get("rList"), List.class);
+        List<String> rList = (List<String>) new Gson().fromJson(
+                facesContext.getExternalContext().getRequestParameterMap().get("rList"), List.class);
 
         if (rList == null || rList.isEmpty()) {
             FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ошибка", "Выберите хотя бы один радиус");

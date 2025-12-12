@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc7052a6-f8c1-4803-97d7-164d1c8a811a" name="Changes" comment="init" />
+    <list default="true" id="cc7052a6-f8c1-4803-97d7-164d1c8a811a" name="Changes" comment="init">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/pmih/web/controller/InputBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/pmih/web/controller/InputBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/pmih/web/utils/validators/PointValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/pmih/web/utils/validators/PointValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/pmih/web/utils/validators/YRangeValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/pmih/web/utils/validators/YRangeValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/script/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/script/form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/script/map-canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/script/map-canvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/style/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/results.xhtml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/results.xhtml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +50,10 @@
     "url": "git@github.com:Axe-On-You/Web.git",
     "accountId": "6973a70e-fe39-4455-a34b-fd978dfde9ea"
   }
+}]]></component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
 }]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -87,7 +101,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1765500789323</updated>
-      <workItem from="1765500790309" duration="14092000" />
+      <workItem from="1765500790309" duration="16789000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
