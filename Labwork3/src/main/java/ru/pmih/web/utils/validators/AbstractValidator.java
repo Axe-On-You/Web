@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 /**
  * Абстрактный класс валидатора на предикате
  * @param <T> валидируемый класс
- * @author pmih
  */
 @Getter
 @Setter

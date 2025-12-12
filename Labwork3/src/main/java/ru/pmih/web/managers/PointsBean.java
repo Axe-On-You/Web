@@ -43,8 +43,4 @@ public class PointsBean {
     public void addAll(List<PointEntity> points) throws ValidationError {
         points.forEach(this::add);
     }
-
-    public String testString() {
-        return "Hello, pointsBean!";
-    }
 }
