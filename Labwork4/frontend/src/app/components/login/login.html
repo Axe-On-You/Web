@@ -1,0 +1,27 @@
+<p-toast></p-toast>
+<div class="flex align-items-center justify-content-center min-h-screen surface-ground">
+    <div class="flex flex-column align-items-center w-full md:w-6 lg:w-4 gap-4">
+
+        <div class="surface-card p-4 shadow-2 border-round w-full text-center">
+            <h2 class="text-primary m-0">Лабораторная работа 4</h2>
+            <div class="text-500 mt-2">Студент: Михайлов Петр</div>
+            <div class="text-500">Группа: P3211 | Вариант: 3642</div>
+        </div>
+
+        <p-card class="w-full shadow-4">
+            <div class="flex flex-column gap-3">
+                <label class="font-bold">Логин</label>
+                <input pInputText [(ngModel)]="username" placeholder="Введите логин" />
+
+                <label class="font-bold">Пароль</label>
+                <p-password [(ngModel)]="password" [feedback]="false" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full"></p-password>
+
+                <div class="flex gap-2 mt-3">
+                    <p-button label="Войти" (onClick)="onLogin()" styleClass="w-full"></p-button>
+                    <p-button label="Регистрация" (onClick)="onRegister()" styleClass="p-button-outlined w-full"></p-button>
+                </div>
+            </div>
+        </p-card>
+
+    </div>
+</div>

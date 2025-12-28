@@ -1,0 +1,13 @@
+# Разрешаем подстановку переменных окружения
+/subsystem=ee:write-attribute(name=annotation-property-replacement,value=true)
+/subsystem=ee:write-attribute(name=spec-descriptor-property-replacement,value=true)
+/subsystem=ee:write-attribute(name=jboss-descriptor-property-replacement,value=true)
+
+# 1. Добавляем драйвер как модуль
+module add --name=org.postgresql --resources=/opt/jboss/wildfly/standalone/deployments/postgresql-42.7.8.jar --dependencies=javax.api,javax.transaction.api
+
+# 2. Регистрируем драйвер
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
+
+# 3. Создаем сам DataSource
+data-source add --name=PostgresDS --jndi-name=java:/PostgresDS --driver-name=postgresql --connection-url=jdbc:postgresql://db:5432/${env.DB_NAME} --user-name=${env.DB_USER} --password=${env.DB_PASSWORD} --check-valid-connection-sql="SELECT 1" --background-validation=true

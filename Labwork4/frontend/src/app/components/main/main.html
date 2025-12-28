@@ -1,0 +1,63 @@
+<div class="min-h-screen bg-blue-50 p-4">
+    <div class="flex justify-content-between align-items-center mb-4 surface-card p-3 border-round shadow-1">
+        <h2 class="m-0 text-primary">Основная страница</h2>
+        <p-button label="Выйти" icon="pi pi-sign-out" class="p-button-danger p-button-text" (onClick)="logout()"></p-button>
+    </div>
+
+    <div class="grid">
+        <div class="col-12 lg:col-5">
+            <p-card header="График" class="mb-3 text-center">
+                <canvas #canvasGraph width="300" height="300" (click)="onCanvasClick($event)"
+                        class="border-1 border-300 cursor-pointer bg-white"></canvas>
+            </p-card>
+
+            <p-card header="Параметры">
+                <div class="flex flex-column gap-3">
+                    <div class="field">
+                        <label class="block mb-2 font-bold">Координата X</label>
+                        <p-select [options]="xOptions" [(ngModel)]="x" placeholder="Выберите X" class="w-full"></p-select>
+                    </div>
+
+                    <div class="field">
+                        <label class="block mb-2 font-bold">Координата Y (-3 ... 3)</label>
+                        <input pInputText type="text" [(ngModel)]="y" placeholder="-3 ... 3" class="w-full">
+                    </div>
+
+                    <div class="field">
+                        <label class="block mb-2 font-bold">Радиус R</label>
+                        <p-select [options]="rOptions" [(ngModel)]="r" (onChange)="drawGraph()" placeholder="Выберите R" class="w-full"></p-select>
+                    </div>
+
+                    <p-button label="Проверить" icon="pi pi-check" (onClick)="submitForm()" class="w-full"></p-button>
+                </div>
+            </p-card>
+        </div>
+
+        <div class="col-12 lg:col-7">
+            <p-card header="Результаты">
+                <p-table [value]="points" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>X</th>
+                            <th>Y</th>
+                            <th>R</th>
+                            <th>Результат</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-point>
+                        <tr>
+                            <td>{{point.x | number:'1.2-2'}}</td>
+                            <td>{{point.y | number:'1.2-2'}}</td>
+                            <td>{{point.r}}</td>
+                            <td>
+                                <span [class]="point.hit ? 'text-green-500 font-bold' : 'text-red-500 font-bold'">
+                                    {{point.hit ? 'Попадание' : 'Промах'}}
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-card>
+        </div>
+    </div>
+</div>

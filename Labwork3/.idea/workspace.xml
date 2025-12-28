@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc7052a6-f8c1-4803-97d7-164d1c8a811a" name="Changes" comment="maxlength y">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="cc7052a6-f8c1-4803-97d7-164d1c8a811a" name="Changes" comment="small fix, remove comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/pmih/web/managers/PointsBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/pmih/web/managers/PointsBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/script/map-canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/script/map-canvas.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +63,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -97,7 +95,8 @@
       <option name="presentableId" value="Default" />
       <updated>1765500789323</updated>
       <workItem from="1765500790309" duration="17225000" />
-      <workItem from="1765543801465" duration="1819000" />
+      <workItem from="1765543801465" duration="8149000" />
+      <workItem from="1766921141340" duration="59000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -135,6 +134,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="maxlength y" />
-    <option name="LAST_COMMIT_MESSAGE" value="maxlength y" />
+    <MESSAGE value="small fix, remove comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="small fix, remove comments" />
   </component>
 </project>
