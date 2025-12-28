@@ -11,7 +11,7 @@
                 <div class="flex flex-column align-items-center">
                     <canvas #canvasGraph width="300" height="300" (click)="onCanvasClick($event)"
                             class="border-1 border-300 cursor-pointer bg-white border-round shadow-2"></canvas>
-                    <small class="text-500 mt-2">Для клика выберите один R</small>
+                    <small class="text-500 mt-2">Для клика выберите ровно один R</small>
                 </div>
             </p-card>
 
@@ -21,6 +21,7 @@
                         <label class="block mb-2 font-bold">Координата X (Multi)</label>
                         <p-multiSelect [options]="xOptions" [(ngModel)]="selectedX"
                                        placeholder="Выберите X" class="w-full"
+                                       [filter]="false"
                                        display="chip"></p-multiSelect>
                     </div>
 
@@ -37,6 +38,7 @@
                         <p-multiSelect [options]="rOptions" [(ngModel)]="selectedR"
                                        (onChange)="drawGraph()"
                                        placeholder="Выберите R" class="w-full"
+                                       [filter]="false"
                                        display="chip"></p-multiSelect>
                     </div>
 
@@ -48,7 +50,7 @@
         <div class="col-12 lg:col-7">
             <p-card header="Результаты">
                 <p-table [value]="points" [paginator]="true" [rows]="10"
-                         [tableStyle]="{'min-width': '50rem'}"
+                         [tableStyle]="{'min-width': '40rem'}"
                          responsiveLayout="scroll" styleClass="p-datatable-striped">
                     <ng-template pTemplate="header">
                         <tr>

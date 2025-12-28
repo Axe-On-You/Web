@@ -33,7 +33,6 @@ export class MainComponent implements OnInit, AfterViewInit {
     @ViewChild('canvasGraph', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
 
     xOptions = [-5, -4, -3, -2, -1, 0, 1, 2, 3];
-    // Для R оставляем только положительные, так как график и логика зависят от этого
     rOptions = [1, 2, 3];
 
     selectedX: number[] = [];
@@ -79,7 +78,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         const h = canvas.height;
 
         const maxRForScale = this.selectedR.length > 0 ? Math.max(...this.selectedR) : 3;
-        const margin = 30;
+        const margin = 35;
         const scale = (w / 2 - margin) / maxRForScale;
 
         ctx.clearRect(0, 0, w, h);
@@ -105,12 +104,7 @@ export class MainComponent implements OnInit, AfterViewInit {
             }
         });
 
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2);
-        ctx.moveTo(w / 2, 0); ctx.lineTo(w / 2, h);
-        ctx.stroke();
+        this.drawAxes(ctx, w, h, scale, maxRForScale);
 
         this.points.forEach(p => {
             const px = w / 2 + p.x * scale;
@@ -122,6 +116,54 @@ export class MainComponent implements OnInit, AfterViewInit {
             ctx.fill();
             ctx.strokeStyle = '#fff';
             ctx.stroke();
+        });
+    }
+
+    drawAxes(ctx: CanvasRenderingContext2D, w: number, h: number, scale: number, r: number) {
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 1.5;
+        ctx.fillStyle = '#333';
+        ctx.font = '12px Arial';
+
+        // X Axis
+        ctx.beginPath();
+        ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2);
+        ctx.stroke();
+
+        // Y Axis
+        ctx.beginPath();
+        ctx.moveTo(w / 2, 0); ctx.lineTo(w / 2, h);
+        ctx.stroke();
+
+        const rVal = r * scale;
+        const rHalf = rVal / 2;
+
+        const marksX = [
+            {pos: w/2 - rVal, label: '-' + r},
+            {pos: w/2 - rHalf, label: '-' + r/2},
+            {pos: w/2 + rHalf, label: '' + r/2},
+            {pos: w/2 + rVal, label: '' + r}
+        ];
+
+        marksX.forEach(m => {
+            ctx.beginPath();
+            ctx.moveTo(m.pos, h/2 - 5); ctx.lineTo(m.pos, h/2 + 5);
+            ctx.stroke();
+            ctx.fillText(m.label, m.pos - 10, h/2 + 20);
+        });
+
+        const marksY = [
+            {pos: h/2 - rVal, label: '' + r},
+            {pos: h/2 - rHalf, label: '' + r/2},
+            {pos: h/2 + rHalf, label: '-' + r/2},
+            {pos: h/2 + rVal, label: '-' + r}
+        ];
+
+        marksY.forEach(m => {
+            ctx.beginPath();
+            ctx.moveTo(w/2 - 5, m.pos); ctx.lineTo(w/2 + 5, m.pos);
+            ctx.stroke();
+            ctx.fillText(m.label, w/2 + 10, m.pos + 5);
         });
     }
 
@@ -140,7 +182,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         const w = canvas.width;
         const h = canvas.height;
         const maxR = Math.max(...this.selectedR);
-        const scale = (w / 2 - 30) / maxR;
+        const scale = (w / 2 - 35) / maxR;
 
         const graphX = (clickX - w / 2) / scale;
         const graphY = (h / 2 - clickY) / scale;
@@ -150,17 +192,14 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     submitForm() {
         const yVal = parseFloat(this.y);
-
         if (isNaN(yVal) || yVal <= -3 || yVal >= 3) {
             this.msg.add({severity:'error', summary:'Ошибка', detail:'Y должен быть числом в интервале (-3; 3)'});
             return;
         }
-
         if (this.selectedX.length === 0 || this.selectedR.length === 0) {
             this.msg.add({severity:'warn', summary:'Ошибка', detail:'Выберите X и R'});
             return;
         }
-
         this.selectedX.forEach(x => {
             this.selectedR.forEach(r => {
                 this.submitPoint(x, yVal, r);
