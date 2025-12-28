@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="min-h-screen bg-blue-50 p-4">
     <div class="flex justify-content-between align-items-center mb-4 surface-card p-3 border-round shadow-1">
         <h2 class="m-0 text-primary">Основная страница</h2>
@@ -7,25 +8,36 @@
     <div class="grid">
         <div class="col-12 lg:col-5">
             <p-card header="График" class="mb-3 text-center">
-                <canvas #canvasGraph width="300" height="300" (click)="onCanvasClick($event)"
-                        class="border-1 border-300 cursor-pointer bg-white"></canvas>
+                <div class="flex flex-column align-items-center">
+                    <canvas #canvasGraph width="300" height="300" (click)="onCanvasClick($event)"
+                            class="border-1 border-300 cursor-pointer bg-white border-round shadow-2"></canvas>
+                    <small class="text-500 mt-2">Для клика выберите один R</small>
+                </div>
             </p-card>
 
             <p-card header="Параметры">
                 <div class="flex flex-column gap-3">
                     <div class="field">
-                        <label class="block mb-2 font-bold">Координата X</label>
-                        <p-select [options]="xOptions" [(ngModel)]="x" placeholder="Выберите X" class="w-full"></p-select>
+                        <label class="block mb-2 font-bold">Координата X (Multi)</label>
+                        <p-multiSelect [options]="xOptions" [(ngModel)]="selectedX"
+                                       placeholder="Выберите X" class="w-full"
+                                       display="chip"></p-multiSelect>
                     </div>
 
                     <div class="field">
-                        <label class="block mb-2 font-bold">Координата Y (-3 ... 3)</label>
-                        <input pInputText type="text" [(ngModel)]="y" placeholder="-3 ... 3" class="w-full">
+                        <label class="block mb-2 font-bold">Координата Y (Интервал -3 ... 3)</label>
+                        <input pInputText type="text" [(ngModel)]="y"
+                               (input)="validateY($event)"
+                               maxlength="9"
+                               placeholder="Введите число от -3 до 3" class="w-full">
                     </div>
 
                     <div class="field">
-                        <label class="block mb-2 font-bold">Радиус R</label>
-                        <p-select [options]="rOptions" [(ngModel)]="r" (onChange)="drawGraph()" placeholder="Выберите R" class="w-full"></p-select>
+                        <label class="block mb-2 font-bold">Радиус R (Multi)</label>
+                        <p-multiSelect [options]="rOptions" [(ngModel)]="selectedR"
+                                       (onChange)="drawGraph()"
+                                       placeholder="Выберите R" class="w-full"
+                                       display="chip"></p-multiSelect>
                     </div>
 
                     <p-button label="Проверить" icon="pi pi-check" (onClick)="submitForm()" class="w-full"></p-button>
@@ -35,25 +47,29 @@
 
         <div class="col-12 lg:col-7">
             <p-card header="Результаты">
-                <p-table [value]="points" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+                <p-table [value]="points" [paginator]="true" [rows]="10"
+                         [tableStyle]="{'min-width': '50rem'}"
+                         responsiveLayout="scroll" styleClass="p-datatable-striped">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>X</th>
                             <th>Y</th>
                             <th>R</th>
                             <th>Результат</th>
+                            <th>Время</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-point>
                         <tr>
-                            <td>{{point.x | number:'1.2-2'}}</td>
-                            <td>{{point.y | number:'1.2-2'}}</td>
+                            <td>{{point.x | number:'1.1-4'}}</td>
+                            <td>{{point.y | number:'1.1-4'}}</td>
                             <td>{{point.r}}</td>
                             <td>
                                 <span [class]="point.hit ? 'text-green-500 font-bold' : 'text-red-500 font-bold'">
                                     {{point.hit ? 'Попадание' : 'Промах'}}
                                 </span>
                             </td>
+                            <td>{{point.createdAt | date:'HH:mm:ss'}}</td>
                         </tr>
                     </ng-template>
                 </p-table>

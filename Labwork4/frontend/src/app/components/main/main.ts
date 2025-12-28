@@ -7,29 +7,46 @@ import { PointService, Point } from '../../services/point.service';
 // PrimeNG Modules
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import { SelectModule } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-main',
     standalone: true,
-    imports: [CommonModule, FormsModule, ButtonModule, TableModule, SelectModule, InputTextModule, CardModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ButtonModule,
+        TableModule,
+        MultiSelectModule,
+        InputTextModule,
+        CardModule,
+        ToastModule
+    ],
+    providers: [MessageService],
     templateUrl: './main.html'
 })
 export class MainComponent implements OnInit, AfterViewInit {
     @ViewChild('canvasGraph', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
 
     xOptions = [-5, -4, -3, -2, -1, 0, 1, 2, 3];
-    rOptions = [-5, -4, -3, -2, -1, 0, 1, 2, 3]; // В задании написано MultiSelect, но для графика логичнее выбирать один R
+    // Для R оставляем только положительные, так как график и логика зависят от этого
+    rOptions = [1, 2, 3];
 
-    x: number = 0;
-    y: string = "0"; // String, чтобы валидировать ввод руками
-    r: number = 1;
+    selectedX: number[] = [];
+    selectedR: number[] = [];
+    y: string = "0";
 
     points: Point[] = [];
 
-    constructor(private pointService: PointService, private auth: AuthService) {}
+    constructor(
+        private pointService: PointService,
+        private auth: AuthService,
+        private msg: MessageService
+    ) {}
 
     ngOnInit() {
         this.loadPoints();
@@ -46,7 +63,12 @@ export class MainComponent implements OnInit, AfterViewInit {
         });
     }
 
-    // --- Логика графика ---
+    validateY(event: any) {
+        let val = event.target.value.replace(/[^0-9.-]/g, '');
+        if ((val.match(/\./g) || []).length > 1) val = val.substr(0, val.lastIndexOf("."));
+        this.y = val;
+    }
+
     drawGraph() {
         if (!this.canvasRef) return;
         const canvas = this.canvasRef.nativeElement;
@@ -55,66 +77,42 @@ export class MainComponent implements OnInit, AfterViewInit {
 
         const w = canvas.width;
         const h = canvas.height;
-        const margin = 20; // отступ от краев
-        const scale = (w - 2 * margin) / 10; // масштаб: 10 единиц (от -5 до 5) занимают почти всю ширину
 
-        // Очистка
+        const maxRForScale = this.selectedR.length > 0 ? Math.max(...this.selectedR) : 3;
+        const margin = 30;
+        const scale = (w / 2 - margin) / maxRForScale;
+
         ctx.clearRect(0, 0, w, h);
 
-        // Рисуем область (синим цветом)
-        if (this.r > 0) {
-            const rVal = this.r * scale;
-            ctx.fillStyle = 'rgba(63, 145, 255, 0.7)'; // Тот самый голубой со скрина
-            ctx.beginPath();
+        this.selectedR.forEach(r => {
+            if (r > 0) {
+                const rVal = r * scale;
+                ctx.fillStyle = 'rgba(63, 145, 255, 0.3)';
 
-            // 1. Четверть круга (1 четверть): x>0, y>0, R/2
-            ctx.moveTo(w / 2, h / 2);
-            ctx.arc(w / 2, h / 2, rVal / 2, -Math.PI / 2, 0, false);
-            ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(w / 2, h / 2);
+                ctx.arc(w / 2, h / 2, rVal / 2, -Math.PI / 2, 0, false);
+                ctx.fill();
 
-            // 2. Прямоугольник (2 четверть): x от -R до 0, y от 0 до R/2
-            ctx.fillRect(w / 2 - rVal, h / 2 - rVal / 2, rVal, rVal / 2);
+                ctx.fillRect(w / 2 - rVal, h / 2 - rVal / 2, rVal, rVal / 2);
 
-            // 3. Треугольник (3 четверть): y >= -x/2 - r/2
-            ctx.beginPath();
-            ctx.moveTo(w / 2, h / 2); // Центр
-            ctx.lineTo(w / 2 - rVal, h / 2); // Точка -R на оси X
-            ctx.lineTo(w / 2, h / 2 + rVal / 2); // Точка -R/2 на оси Y
-            ctx.closePath();
-            ctx.fill();
-        }
+                ctx.beginPath();
+                ctx.moveTo(w / 2, h / 2);
+                ctx.lineTo(w / 2 - rVal, h / 2);
+                ctx.lineTo(w / 2, h / 2 + rVal / 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+        });
 
-        // Рисуем оси
-        ctx.strokeStyle = '#000';
+        ctx.strokeStyle = '#333';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        // X
         ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2);
-        ctx.lineTo(w - 10, h / 2 - 5); ctx.moveTo(w, h / 2); ctx.lineTo(w - 10, h / 2 + 5);
-        // Y
-        ctx.moveTo(w / 2, h); ctx.lineTo(w / 2, 0);
-        ctx.lineTo(w / 2 - 5, 10); ctx.moveTo(w / 2, 0); ctx.lineTo(w / 2 + 5, 10);
+        ctx.moveTo(w / 2, 0); ctx.lineTo(w / 2, h);
         ctx.stroke();
 
-        // Подписи делений (R, R/2)
-        if (this.r > 0) {
-            const rVal = this.r * scale;
-            ctx.fillStyle = '#000';
-            ctx.font = '12px Arial';
-            // На оси X
-            ctx.fillText('R', w / 2 + rVal - 5, h / 2 + 15);
-            ctx.fillText('R/2', w / 2 + rVal / 2 - 10, h / 2 + 15);
-            ctx.fillText('-R', w / 2 - rVal - 10, h / 2 + 15);
-            // На оси Y
-            ctx.fillText('R', w / 2 + 5, h / 2 - rVal + 5);
-            ctx.fillText('R/2', w / 2 + 5, h / 2 - rVal / 2 + 5);
-            ctx.fillText('-R/2', w / 2 + 5, h / 2 + rVal / 2 + 5);
-        }
-
-        // Рисуем точки
         this.points.forEach(p => {
-            // Важно: точки рисуем относительно текущего R на графике!
-            // Если точка была поставлена с R=3, а сейчас R=1, она может визуально "вылететь" из области
             const px = w / 2 + p.x * scale;
             const py = h / 2 - p.y * scale;
 
@@ -128,10 +126,12 @@ export class MainComponent implements OnInit, AfterViewInit {
     }
 
     onCanvasClick(event: MouseEvent) {
-        if (this.r <= 0) {
-            alert("Выберите положительный радиус!");
+        if (this.selectedR.length !== 1) {
+            this.msg.add({severity:'warn', summary:'Внимание', detail:'Для клика по графику выберите ровно один R'});
             return;
         }
+
+        const r = this.selectedR[0];
         const canvas = this.canvasRef.nativeElement;
         const rect = canvas.getBoundingClientRect();
         const clickX = event.clientX - rect.left;
@@ -139,28 +139,44 @@ export class MainComponent implements OnInit, AfterViewInit {
 
         const w = canvas.width;
         const h = canvas.height;
-        const margin = 20;
-        const scale = (w - 2 * margin) / 10;
+        const maxR = Math.max(...this.selectedR);
+        const scale = (w / 2 - 30) / maxR;
 
         const graphX = (clickX - w / 2) / scale;
         const graphY = (h / 2 - clickY) / scale;
 
-        this.submitPoint(graphX, graphY, this.r);
+        this.submitPoint(graphX, graphY, r);
     }
 
     submitForm() {
         const yVal = parseFloat(this.y);
-        if (isNaN(yVal) || yVal < -3 || yVal > 3) {
-            alert("Y должен быть числом от -3 до 3");
+
+        if (isNaN(yVal) || yVal <= -3 || yVal >= 3) {
+            this.msg.add({severity:'error', summary:'Ошибка', detail:'Y должен быть числом в интервале (-3; 3)'});
             return;
         }
-        this.submitPoint(this.x, yVal, this.r);
+
+        if (this.selectedX.length === 0 || this.selectedR.length === 0) {
+            this.msg.add({severity:'warn', summary:'Ошибка', detail:'Выберите X и R'});
+            return;
+        }
+
+        this.selectedX.forEach(x => {
+            this.selectedR.forEach(r => {
+                this.submitPoint(x, yVal, r);
+            });
+        });
     }
 
     submitPoint(x: number, y: number, r: number) {
-        this.pointService.addPoint({ x, y, r }).subscribe(newPoint => {
-            this.points.push(newPoint); // Добавляем в таблицу
-            this.drawGraph(); // Перерисовываем
+        this.pointService.addPoint({ x, y, r }).subscribe({
+            next: (newPoint) => {
+                this.points = [newPoint, ...this.points];
+                this.drawGraph();
+            },
+            error: () => {
+                this.msg.add({severity:'error', summary:'Ошибка', detail:'Не удалось отправить точку'});
+            }
         });
     }
 
