@@ -1,77 +1,58 @@
 <p-toast></p-toast>
 <div class="min-h-screen bg-blue-50 p-4">
     <div class="flex justify-content-between align-items-center mb-4 surface-card p-3 border-round shadow-1">
-        <h2 class="m-0 text-primary">Основная страница</h2>
+        <h2 class="m-0 text-primary">Панель управления</h2>
         <p-button label="Выйти" icon="pi pi-sign-out" class="p-button-danger p-button-text" (onClick)="logout()"></p-button>
     </div>
 
     <div class="grid">
         <div class="col-12 lg:col-5">
             <p-card header="График" class="mb-3 text-center">
-                <div class="flex flex-column align-items-center">
-                    <canvas #canvasGraph width="300" height="300" (click)="onCanvasClick($event)"
-                            class="border-1 border-300 cursor-pointer bg-white border-round shadow-2"></canvas>
-                    <small class="text-500 mt-2">Для клика выберите ровно один R</small>
-                </div>
+                <canvas #canvasGraph width="300" height="300" (click)="onCanvasClick($event)"
+                        class="border-1 border-300 cursor-pointer bg-white border-round shadow-2"></canvas>
+                <div class="mt-2 text-500 text-sm">Клик доступен при одном выбранном R</div>
             </p-card>
 
-            <p-card header="Параметры">
+            <p-card header="Ввод данных">
                 <div class="flex flex-column gap-3">
-                    <div class="field">
-                        <label class="block mb-2 font-bold">Координата X (Multi)</label>
-                        <p-multiSelect [options]="xOptions" [(ngModel)]="selectedX"
-                                       placeholder="Выберите X" class="w-full"
-                                       [filter]="false"
-                                       display="chip"></p-multiSelect>
-                    </div>
+                    <label class="font-bold">Координата X</label>
+                    <p-multiSelect [options]="xOptions" [(ngModel)]="selectedX"
+                                   optionLabel="label" optionValue="val"
+                                   [filter]="false" placeholder="Выберите X" class="w-full" display="chip"></p-multiSelect>
 
-                    <div class="field">
-                        <label class="block mb-2 font-bold">Координата Y (Интервал -3 ... 3)</label>
-                        <input pInputText type="text" [(ngModel)]="y"
-                               (input)="validateY($event)"
-                               maxlength="9"
-                               placeholder="Введите число от -3 до 3" class="w-full">
-                    </div>
+                    <label class="font-bold">Координата Y (-3 ... 3)</label>
+                    <input pInputText type="text" [(ngModel)]="y" (input)="validateY($event)" maxlength="9" class="w-full">
 
-                    <div class="field">
-                        <label class="block mb-2 font-bold">Радиус R (Multi)</label>
-                        <p-multiSelect [options]="rOptions" [(ngModel)]="selectedR"
-                                       (onChange)="drawGraph()"
-                                       placeholder="Выберите R" class="w-full"
-                                       [filter]="false"
-                                       display="chip"></p-multiSelect>
-                    </div>
+                    <label class="font-bold">Радиус R</label>
+                    <p-multiSelect [options]="rOptions" [(ngModel)]="selectedR"
+                                   optionLabel="label" optionValue="val"
+                                   (onChange)="drawGraph()" [filter]="false"
+                                   placeholder="Выберите R" class="w-full" display="chip"></p-multiSelect>
 
-                    <p-button label="Проверить" icon="pi pi-check" (onClick)="submitForm()" class="w-full"></p-button>
+                    <p-button label="Проверить" icon="pi pi-play" (onClick)="submitForm()" class="w-full"></p-button>
                 </div>
             </p-card>
         </div>
 
         <div class="col-12 lg:col-7">
-            <p-card header="Результаты">
-                <p-table [value]="points" [paginator]="true" [rows]="10"
-                         [tableStyle]="{'min-width': '40rem'}"
-                         responsiveLayout="scroll" styleClass="p-datatable-striped">
+            <p-card header="История">
+                <p-table [value]="points" [paginator]="true" [rows]="10" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '40rem'}">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>X</th>
-                            <th>Y</th>
-                            <th>R</th>
-                            <th>Результат</th>
-                            <th>Время</th>
+                            <th>X</th><th>Y</th><th>R</th><th>Результат</th><th>Время</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-point>
                         <tr>
-                            <td>{{point.x | number:'1.1-4'}}</td>
-                            <td>{{point.y | number:'1.1-4'}}</td>
+                            <td>{{point.x | number:'1.1-3'}}</td>
+                            <td>{{point.y | number:'1.1-3'}}</td>
                             <td>{{point.r}}</td>
                             <td>
-                                <span [class]="point.hit ? 'text-green-500 font-bold' : 'text-red-500 font-bold'">
-                                    {{point.hit ? 'Попадание' : 'Промах'}}
+                                <span [class]="point.hit ? 'text-green-500' : 'text-red-500'">
+                                    {{point.hit ? 'Попал' : 'Мимо'}}
                                 </span>
                             </td>
-                            <td>{{point.createdAt | date:'HH:mm:ss'}}</td>
+                            <td>{{ (point.createdAt || point.created_at) | date:'HH:mm:ss' }}</td>
                         </tr>
                     </ng-template>
                 </p-table>
