@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    // Проверь порт! У тебя бэкенд на 8080
     private apiUrl = 'http://localhost:8080/backend/api/auth';
 
     constructor(private http: HttpClient, private router: Router) {}

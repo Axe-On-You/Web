@@ -12,7 +12,7 @@ import java.util.Base64;
  */
 @ApplicationScoped
 public class JwtUtils {
-    // В реальном проекте это должно быть в конфиге/переменных окружения
+    // ЛОЛ
     private static final String SECRET = "MY_SUPER_SECRET_KEY_FOR_LAB_4_ITMO_2025";
     private static final String ALGORITHM = "HmacSHA256";
 

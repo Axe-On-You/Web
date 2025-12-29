@@ -7,7 +7,7 @@ export interface Point {
     x: number;
     y: number;
     r: number;
-    hit?: boolean; // ? значит необязательно при отправке
+    hit?: boolean;
     created_at?: string;
 }
 

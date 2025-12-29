@@ -35,7 +35,6 @@ public class PointResource {
         Long userId = getUserIdFromHeader(authHeader);
         if (userId == null) return Response.status(Response.Status.UNAUTHORIZED).build();
 
-        // Небольшая валидация входных данных
         if (pointDTO.getR() == null || pointDTO.getR() <= 0) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Radius must be positive").build();
         }

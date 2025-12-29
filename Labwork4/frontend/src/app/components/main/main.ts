@@ -69,7 +69,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         const h = canvas.height;
 
         const hasR = this.selectedR.length > 0;
-        // Если R не выбран, рисуем "картинку" для R = 3
+        // Если R не выбран, рисуем для R = 3
         const drawRList = hasR ? this.selectedR : [3];
         const maxRScale = Math.max(...drawRList);
 
@@ -78,7 +78,6 @@ export class MainComponent implements OnInit, AfterViewInit {
 
         ctx.clearRect(0, 0, w, h);
 
-        // 1. Отрисовка областей (либо выбранных, либо дефолтной для R=3)
         drawRList.forEach(r => {
             const rVal = r * scale;
             ctx.fillStyle = 'rgba(63, 145, 255, 0.3)';
@@ -94,13 +93,10 @@ export class MainComponent implements OnInit, AfterViewInit {
             ctx.fill();
         });
 
-        // 2. Оси всегда
         this.drawAxes(ctx, w, h, scale, maxRScale);
 
-        // 3. Точки рисуем только если R ВЫБРАН и только те, которые соответствуют выбранным R
         if (hasR) {
             this.points.forEach(p => {
-                // Фильтр: рисуем точку только если её R сейчас в списке выбранных
                 if (this.selectedR.includes(p.r)) {
                     const px = w / 2 + p.x * scale;
                     const py = h / 2 - p.y * scale;

@@ -53,7 +53,6 @@ export class LoginComponent {
         if (err.status === 409) {
           this.msg.add({ severity: 'error', summary: 'Ошибка', detail: 'Пользователь уже существует' });
         } else {
-          // Если пришел 200 OK, но упал парсинг текста (Angular ждет JSON)
           if (err.status === 200) {
             this.msg.add({ severity: 'success', summary: 'Успех', detail: 'Вы зарегистрированы' });
           } else {
